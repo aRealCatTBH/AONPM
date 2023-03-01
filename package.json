@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "update": "git pull && node index.js && git push"
+    "update": "node index.js"
   },
   "author": "",
   "license": "ISC"
