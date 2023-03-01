@@ -1,43 +1,27 @@
-var https = require('https');
 var fs = require('fs');
 
-var options = {
-  hostname: 'skimdb.npmjs.com',
-  port: 443,
-  path: '/registry/_all_docs'
-};
+fetch("https://skimdb.npmjs.com/registry/_all_docs")
+.then(d=>d.json())
+.then(json=>{
+  var packageJson = require("./package.json");
+  var currentDependencies = packageJson.dependencies;
+  var json = JSON.parse(body);
 
-var req = https.request(options, function(res) {
-  var body = '';
+  packageJson.dependencies = {};
 
-  res.setEncoding('utf8');
-  res.on('data', function (chunk) {
-    body += chunk.toString();
-  });
-
-  res.on('end', function() {
-    var packageJson = require("./package.json");
-    var currentDependencies = packageJson.dependencies;
-    var json = JSON.parse(body);
-
-    packageJson.dependencies = {};
-
-    var foundNewDeps = 0;
-    json.rows.forEach(function(package){ console.log(package.id)
-      // Ok, really not whole npm
-      if (package.id !== 'AONPM') {
-        if (!currentDependencies[package.id]) {
-          foundNewDeps++;
-        }
-
-        packageJson.dependencies[package.id] = '*';
+  var foundNewDeps = 0;
+  json.rows.forEach(function(package){ console.log(package.id)
+    // Ok, really not whole npm
+    if (package.id !== 'AONPM') {
+      if (!currentDependencies[package.id]) {
+        foundNewDeps++;
       }
-    });
 
-    console.log('Found', foundNewDeps, 'new deps');
-
-    fs.writeFileSync("package.json", JSON.stringify(packageJson, null, 2));
+      packageJson.dependencies[package.id] = '*';
+    }
   });
-});
 
-req.end();
+  console.log('Found', foundNewDeps, 'new deps');
+
+  fs.writeFileSync("package.json", JSON.stringify(packageJson, null, 2));
+})
