@@ -23,9 +23,9 @@ var req = https.request(options, function(res) {
     packageJson.dependencies = {};
 
     var foundNewDeps = 0;
-    json.rows.forEach(function(package){
+    json.rows.forEach(function(package){ console.log(package.id)
       // Ok, really not whole npm
-      if (package.id !== 'whole-npm') {
+      if (package.id !== 'AONPM') {
         if (!currentDependencies[package.id]) {
           foundNewDeps++;
         }
