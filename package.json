@@ -1,0 +1,11 @@
+{
+  "name": "aonpm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "update": "git pull && node index.js && git push"
+  },
+  "author": "",
+  "license": "ISC"
+}
