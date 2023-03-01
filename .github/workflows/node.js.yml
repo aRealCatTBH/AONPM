@@ -21,5 +21,8 @@ jobs:
       with:
         node-version: 18.x
         cache: 'npm'
+    - run: git pull
+    - run: npm audit
     - run: npm run update
     - run: npm audit
+    - run: git push
