@@ -1,8 +1,10 @@
+console.log("starting")
+
 var fs = require('fs');
 
 fetch("https://skimdb.npmjs.com/registry/_all_docs")
 .then(d=>d.json())
-.then(json=>{
+.then(json=>{console.log("fetched")
   var packageJson = require("./package.json");
   var currentDependencies = packageJson.dependencies;
   var json = JSON.parse(body);
